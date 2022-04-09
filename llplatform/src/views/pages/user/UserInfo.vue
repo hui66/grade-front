@@ -1,6 +1,6 @@
 <template>
   <div style="width: 100%;">
-    <el-card style="margin-top: 20px;">
+    <el-card style="margin-top: 20px;" v-show="false">
       <el-form :inline="true" :model="formInline" ref="formInline" :rules="rules" align="center">
         <el-form-item>
           <el-button type="primary" @click="onSubmit('formInline')">查询</el-button>
@@ -11,76 +11,47 @@
       <el-table
         :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
         style="width: 100%">
-        <el-table-column label="编号"
-                         type="index"
-                         width="50">
-        </el-table-column>
-        <el-table-column label="课程名称">
+        <el-table-column label="学校">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.courseName }}</span>
+            <span style="margin-left: 10px">{{ scope.row.school }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="课程代码">
+        <el-table-column label="姓名">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.courseCode }}</span>
+            <span style="margin-left: 10px">{{ scope.row.userName }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="课时">
+        <el-table-column label="学号">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.courseTime }}</span>
+            <span style="margin-left: 10px">{{ scope.row.schoolNumber }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="工程知识指标">
+        <el-table-column label="年级">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.theoryAbility }}</span>
+            <span style="margin-left: 10px">{{ scope.row.grade }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="设计/开发解决方案指标">
+        <el-table-column label="专业">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.codeAbility }}</span>
+            <span style="margin-left: 10px">{{ scope.row.profession }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="研究指标">
+        <el-table-column label="性别">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.practiceAbility }}</span>
+            <span style="margin-left: 10px">{{ scope.row.sex }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="个人和团队指标">
+        <el-table-column label="民族">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.createAbility }}</span>
+            <span style="margin-left: 10px">{{ scope.row.ethnicGroup }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="项目管理指标">
+        <el-table-column label="电话">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.artAbility }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作">
-          <template slot-scope="scope">
-            <el-button
-              v-show="scope.row.status==null || scope.row.status==1"
-              size="mini"
-              @click="handleEdit(scope.$index, scope.row)" >选课
-            </el-button>
-            <el-button
-              v-show="scope.row.status==0"
-              size="mini"
-              type="danger"
-              @click="handleDelete(scope.$index, scope.row)">退选
-            </el-button>
+            <span style="margin-left: 10px">{{ scope.row.phone }}</span>
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        background
-        :current-page="currentPage"
-        :page-sizes="[10, 20, 30, 40]"
-        :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="pageTotal">
-      </el-pagination>
       <el-dialog title="课程信息" :visible.sync="dialogFormVisible">
         <el-form :model="form">
           <el-form-item label="课程名称" label-width="120px">
@@ -100,9 +71,12 @@
 </template>
 
 <script>
-import { requestRecommendQuery, requestChoiceAdd, requestChoiceCancel } from '@/api/user'
+import { requestUserInfosLogout, requestChoiceAdd, requestChoiceCancel } from '@/api/user'
 
 export default {
+  mounted () {
+    this.onSubmit('formInline')
+  },
   name: 'PageTable',
   data () {
     return {
@@ -137,7 +111,7 @@ export default {
     onSubmit (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          requestRecommendQuery(this.formInline).then(res => {
+          requestUserInfosLogout(this.formInline).then(res => {
             this.$message({
               message: '查询成功！',
               type: 'success'
@@ -192,7 +166,6 @@ export default {
     }
   }
 }
-this.onSubmit('formInline')
 </script>
 
 <style scoped>

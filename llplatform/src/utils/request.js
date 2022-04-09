@@ -46,7 +46,6 @@ axiosCustom.interceptors.request.use(function (config) {
   config.headers.token = localStorage.getItem('user-token')
   return config
 })
-
 /* 普通请求 */
 export const request = (url, params = {}, config = {}, autoErrorRes = true, autoErrorData = true, autoCancel = true) => {
   if (autoCancel) {

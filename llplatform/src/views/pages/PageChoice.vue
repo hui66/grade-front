@@ -100,9 +100,12 @@
 </template>
 
 <script>
-import { requestRecommendQuery, requestChoiceAdd, requestChoiceCancel } from '@/api/user'
+import { requestMycourseQuery, requestChoiceAdd, requestChoiceCancel } from '@/api/user'
 
 export default {
+  mounted () {
+    this.onSubmit('formInline')
+  },
   name: 'PageTable',
   data () {
     return {
@@ -137,7 +140,7 @@ export default {
     onSubmit (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          requestRecommendQuery(this.formInline).then(res => {
+          requestMycourseQuery(this.formInline).then(res => {
             this.$message({
               message: '查询成功！',
               type: 'success'
@@ -192,7 +195,6 @@ export default {
     }
   }
 }
-this.onSubmit('formInline')
 </script>
 
 <style scoped>

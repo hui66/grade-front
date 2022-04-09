@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    MIT Licensed | Copyright © 2019-present linjinze999
+    welcome grade-system
   </footer>
 </template>
 

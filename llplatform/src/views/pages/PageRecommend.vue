@@ -1,6 +1,14 @@
 <template>
   <div style="width: 100%;">
     <el-card style="margin-top: 20px;">
+      <el-select v-model="value" placeholder="请选择百分比" align="left">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
       <el-form :inline="true" :model="formInline" ref="formInline" :rules="rules" align="center">
         <el-form-item>
           <el-button type="primary" @click="onSubmit('formInline')">查询</el-button>
@@ -103,13 +111,16 @@
 import { requestRecommendQuery, requestChoiceAdd, requestChoiceCancel } from '@/api/user'
 
 export default {
-  name: 'PageTable',
+  mounted () {
+    this.onSubmit('formInline')
+  },
+  name: 'PageRecommend',
   data () {
     return {
       formInline: {
         currentPage: 1,
-        pageSize: 10
-
+        pageSize: 10,
+        rate: ''
       },
       tableData: [],
       rules: {
@@ -130,13 +141,25 @@ export default {
         courseCode: '',
         index: 0,
         id: 0
-      }
+      },
+      options: [{
+        value: '0.5',
+        label: '50%'
+      }, {
+        value: '0.8',
+        label: '80%'
+      }, {
+        value: '1',
+        label: '100%'
+      }],
+      value: ''
     }
   },
   methods: {
     onSubmit (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          this.formInline.rate = this.value
           requestRecommendQuery(this.formInline).then(res => {
             this.$message({
               message: '查询成功！',
@@ -192,8 +215,14 @@ export default {
     }
   }
 }
-this.onSubmit('formInline')
 </script>
 
 <style scoped>
+.el-dropdown-link {
+  cursor: pointer;
+  color: #409EFF;
+}
+.el-icon-arrow-down {
+  font-size: 12px;
+}
 </style>

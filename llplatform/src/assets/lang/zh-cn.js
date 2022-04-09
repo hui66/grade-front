@@ -29,17 +29,19 @@ export default {
   },
   menu: {
     home: '首页',
-    table: '表格',
-    form: '表单',
-    formBase: '基本表单',
+    table: '自主选课',
+    formBase: '推荐选课',
     richText: '富文本编辑',
-    chart: '图表',
+    chart: '推荐选课',
     error: '错误',
-    drag: '拖曳',
+    drag: '已选课程',
     settings: '个人设置',
     modifyPass: '修改密码',
+    userInfo: '个人信息',
+    learnInfo: '学生学情分析',
     permissions: '用户权限',
-    about: '关于项目'
+    about: '关于项目',
+    score: '成绩管理'
   },
   header: {
     languageSelect: '选择语言',
@@ -49,6 +51,7 @@ export default {
     modifyTheme: '主题设置',
     modifyLanguage: '语言设置',
     logout: '退出登录',
+    userInfo: '个人信息',
     logoutSuccess: '注销成功！',
     langZh: '简体中文',
     langEn: 'English',

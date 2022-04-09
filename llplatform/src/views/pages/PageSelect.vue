@@ -12,8 +12,8 @@
         :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
         style="width: 100%">
         <el-table-column label="编号"
-                         type="index"
-                         width="50">
+          type="index"
+          width="50">
         </el-table-column>
         <el-table-column label="课程名称">
           <template slot-scope="scope">
@@ -100,9 +100,12 @@
 </template>
 
 <script>
-import { requestRecommendQuery, requestChoiceAdd, requestChoiceCancel } from '@/api/user'
+import { requestUserQuery, requestChoiceAdd, requestChoiceCancel } from '@/api/user'
 
 export default {
+  mounted () {
+    this.onSubmit('formInline')
+  },
   name: 'PageTable',
   data () {
     return {
@@ -137,7 +140,7 @@ export default {
     onSubmit (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          requestRecommendQuery(this.formInline).then(res => {
+          requestUserQuery(this.formInline).then(res => {
             this.$message({
               message: '查询成功！',
               type: 'success'
@@ -192,7 +195,6 @@ export default {
     }
   }
 }
-this.onSubmit('formInline')
 </script>
 
 <style scoped>

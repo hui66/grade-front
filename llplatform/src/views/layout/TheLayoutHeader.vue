@@ -3,7 +3,7 @@
     <router-link to="/index">
       <div class="logo" :class="{'logo-hide': !openNav}">
         <img src="../../assets/logo.png" class="image"/>
-        <span class="text">LLPlatform</span>
+        <span class="text">grade-system</span>
       </div>
     </router-link>
     <div class="content">
@@ -12,47 +12,19 @@
          v-show="!openNav"></i>
     </div>
     <div class="right max-right">
-      <div class="right-item">
-        <i class="el-icon-message" style="font-size: 18px;"></i>
-        <el-badge :value="1" class="item"></el-badge>
-      </div>
-      <div class="right-item">
-        {{ $t('header.themeChange') }}
-        <theme-picker></theme-picker>
-      </div>
-      <div class="right-item" @click="clickLangue">
-        <el-dropdown trigger="click" @command="changeLanguage" id="langDropDown">
-          <p class="user-info">
-            {{ $t('header.languageSelect') }}
-            <i class="el-icon-arrow-down el-icon--right drop-icon" id="langDropIcon"></i>
-          </p>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="zh-cn" :disabled="this.lang==='zh-cn'">
-              {{$t('header.langZh')}}
-            </el-dropdown-item>
-            <el-dropdown-item command="en" :disabled="this.lang==='en'">
-              {{$t('header.langEn')}}
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </div>
-      <div class="right-item">
-        <el-dropdown trigger="click">
-          <p class="user-info">
-            {{ user.name }}<i class="el-icon-s-custom" style="margin-left: 10px"></i>
-          </p>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>
-              <router-link to="/user/password">
-                <el-link :underline="false">{{$t('header.modifyPass')}}</el-link>
-              </router-link>
-            </el-dropdown-item>
-            <el-dropdown-item divided @click.native="logout()">
-              {{$t('header.logout')}}
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </div>
+      <el-dropdown trigger="click">
+        <p class="user-info">
+          {{ user.name }}<i class="el-icon-s-custom" style="margin-left: 10px"></i>
+        </p>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item divided @click.native="userinfo()">
+            {{$t('header.userInfo')}}
+          </el-dropdown-item>
+          <el-dropdown-item divided @click.native="logout()">
+            {{$t('header.logout')}}
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
     <div class="right min-right">
       <el-dropdown trigger="click" :hide-on-click="false">
@@ -95,6 +67,7 @@
 <script>
 import { mapState } from 'vuex'
 import ThemePicker from '@/components/ThemePicker'
+import { requestLogout } from '@/api/user'
 
 export default {
   name: 'TheLayoutHeader',
@@ -118,12 +91,17 @@ export default {
     },
     logout () {
       // do something
-      this.$router.push('/login')
+      requestLogout()
+      this.$router.push('/')
     },
     changeLanguage (language) {
       localStorage.setItem('user-language', language)
       this.$i18n.locale = language
       this.lang = language
+    },
+    userinfo () {
+      // do something
+      this.$router.push('/userInfo')
     },
     clickLangue () {
       let langDropIcon = document.getElementById('langDropIcon')

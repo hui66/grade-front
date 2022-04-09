@@ -187,7 +187,7 @@
 </template>
 
 <script>
-import sha256 from 'crypto-js/sha256'
+// import sha256 from 'crypto-js/sha256'
 import { requestLogin } from '@/api/user'
 import { TweenMax, Expo, Power2 } from 'gsap/all'
 
@@ -196,10 +196,10 @@ export default {
   data () {
     return {
       logining: false,
-      fromUrl: '/',
+      fromUrl: '/index',
       ruleForm: {
-        account: 'admin',
-        checkPass: '123456'
+        account: '',
+        checkPass: ''
       },
       rules: {
         account: [
@@ -624,14 +624,15 @@ export default {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           this.logining = true
-          const loginParams = { username: this.ruleForm.account, password: sha256(this.ruleForm.checkPass) }
+          // const loginParams = { userName: this.ruleForm.account, password: sha256(this.ruleForm.checkPass) }
+          const loginParams = { userName: this.ruleForm.account, password: this.ruleForm.checkPass }
           requestLogin(loginParams).then(data => {
             this.logining = false
             this.$message({
               message: this.$t('login.loginSuccess'),
               type: 'success'
             })
-            this.$router.push(this.fromUrl)
+            this.$router.push('/index')
           }).catch(err => {
             this.logining = false
             console.log(err)

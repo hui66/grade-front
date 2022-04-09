@@ -15,20 +15,35 @@ module.exports = {
   devServer: {
     proxy: (() => {
       if (!process.env.VUE_APP_BACK_END_URL) {
-        return false
+        const _basePath = process.env.VUE_APP_BASE_PATH.endsWith('/')
+          ? process.env.VUE_APP_BASE_PATH
+          : process.env.VUE_APP_BASE_PATH + '/'
+        const _path = _basePath + ''
+        const result = {}
+        result[_path] = {
+          target: process.env.VUE_APP_BACK_END_URL,
+          changeOrigin: true,
+          pathRewrite: {
+            '^/grade': '/grade'
+          }
+        }
+        // result[_path].pathRewrite['^' + _path] = '/'
+        return result
       } else {
         // 代理转发
         const _basePath = process.env.VUE_APP_BASE_PATH.endsWith('/')
           ? process.env.VUE_APP_BASE_PATH
           : process.env.VUE_APP_BASE_PATH + '/'
-        const _path = _basePath + 'api/'
+        const _path = _basePath + ''
         const result = {}
         result[_path] = {
           target: process.env.VUE_APP_BACK_END_URL,
           changeOrigin: true,
-          pathRewrite: {}
+          pathRewrite: {
+            '^/grade': '/grade'
+          }
         }
-        result[_path].pathRewrite['^' + _path] = '/'
+        // result[_path].pathRewrite['^' + _path] = '/'
         return result
       }
     })()

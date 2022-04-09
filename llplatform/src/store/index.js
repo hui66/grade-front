@@ -18,8 +18,24 @@ export default new Vuex.Store({
   },
   mutations: {
     setUser (state, { user }) {
-      state.user.name = user.name
-      state.user.permissions = user.permissions
+      state.user.name = user.data.userName
+      state.user.permissions = [
+        { name: 'index' },
+        { name: 'table' },
+        { name: 'formsBase' },
+        { name: 'formsEdit' },
+        { name: 'charts' },
+        { name: 'errorDemo403' },
+        { name: 'errorDemo404' },
+        { name: 'errorDemo500' },
+        { name: 'drag' },
+        { name: 'userPassword' },
+        { name: 'userPermissions' },
+        { name: 'score' },
+        { name: 'about' },
+        { name: 'userInfo' },
+        { name: 'learnInfo' }
+      ]
       state.user.accessMenu = user.accessMenu
     },
     deleteUser (state) {
@@ -34,6 +50,7 @@ export default new Vuex.Store({
   actions: {
     requestUserInfo ({ commit }) {
       return requestUserInfo().then(user => {
+        console.log(user)
         commit('setUser', { user })
       })
     }

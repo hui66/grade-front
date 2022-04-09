@@ -20,16 +20,6 @@
             <span style="margin-left: 10px">{{ scope.row.courseName }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="课程代码">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.courseCode }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="课时">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.courseTime }}</span>
-          </template>
-        </el-table-column>
         <el-table-column label="工程知识指标">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.theoryAbility }}</span>
@@ -55,19 +45,49 @@
             <span style="margin-left: 10px">{{ scope.row.artAbility }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="平时分">
           <template slot-scope="scope">
-            <el-button
-              v-show="scope.row.status==null || scope.row.status==1"
-              size="mini"
-              @click="handleEdit(scope.$index, scope.row)" >选课
-            </el-button>
-            <el-button
-              v-show="scope.row.status==0"
-              size="mini"
-              type="danger"
-              @click="handleDelete(scope.$index, scope.row)">退选
-            </el-button>
+            <span style="margin-left: 10px">{{ scope.row.normalGrade }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="期末成绩">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.endGrade }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="总分">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.totalScore }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="各指标能力折算比例">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.courseRate }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="工程知识指标分数">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.realTheoryAbility }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="设计/开发解决方案指标分数">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.realCodeAbility }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="研究指标分数">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.realPracticeAbility }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="个人和团队指标分数">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.realCreateAbility }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="项目管理指标分数">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.realArtAbility }}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -100,9 +120,12 @@
 </template>
 
 <script>
-import { requestRecommendQuery, requestChoiceAdd, requestChoiceCancel } from '@/api/user'
+import { requestGradeQuery, requestChoiceAdd, requestChoiceCancel } from '@/api/user'
 
 export default {
+  mounted () {
+    this.onSubmit('formInline')
+  },
   name: 'PageTable',
   data () {
     return {
@@ -137,7 +160,7 @@ export default {
     onSubmit (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          requestRecommendQuery(this.formInline).then(res => {
+          requestGradeQuery(this.formInline).then(res => {
             this.$message({
               message: '查询成功！',
               type: 'success'
@@ -192,7 +215,6 @@ export default {
     }
   }
 }
-this.onSubmit('formInline')
 </script>
 
 <style scoped>

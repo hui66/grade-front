@@ -48,6 +48,7 @@ export default {
     modifyPass: 'Set Password',
     modifyTheme: 'Set Theme',
     logout: 'Logout',
+    userInfo: 'userInfo',
     logoutSuccess: 'Logout success!',
     langZh: '简体中文',
     langEn: 'English',
